@@ -17,7 +17,7 @@ configure_file(${CMAKE_SOURCE_DIR}/Test/test_sents ${CMAKE_BINARY_DIR}/Test/test
 add_executable(tests
   Test/vocab.cpp
 )
-set_target_properties( tests
+set_target_properties(tests
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/Test"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/Test"

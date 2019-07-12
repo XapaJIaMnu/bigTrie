@@ -3,7 +3,7 @@
 
 //Adapted from https://stackoverflow.com/questions/446296/where-can-i-get-a-useful-c-binary-search-algorithm
 template<class Iter, class T>
-Iter binarySearch(Iter begin, Iter end, T val) {
+Iter binarySearch(Iter begin, Iter end, T& val) {
     Iter i = std::lower_bound(begin, end, val);
 
     if (i != end && !(val < *i))
@@ -78,10 +78,10 @@ public:
             tmp.id_ = id;
             auto it = binarySearch(curr_level->begin(), curr_level->end(), tmp);
             if (it == curr_level->end()) {
-                std::cout << item << std::endl;
-                curr_level->push_back(tmp);
+                curr_level->emplace_back(tmp);
+                curr_level = &curr_level->back().next_level;
                 std::sort(curr_level->begin(), curr_level->end());
-                curr_level = &tmp.next_level;
+                
             } else {
                 curr_level = &it->next_level;
             }
@@ -91,29 +91,38 @@ public:
         return trie_;
     }
 
-
-    void find(std::string input) {
-        std::vector<Node>& curr_level = trie_;
+    std::vector<Node>* find(uint16_t id, std::vector<Node>* curr_level) {
+        Node tmp;
+        tmp.id_ = id;
+        auto it = binarySearch(curr_level->begin(), curr_level->end(), tmp);
+        if (it == curr_level->end()) {
+            return nullptr;
+        } else {
+            return &it->next_level;
+        }
+    }
+    /*The rest of the find functions are for testing/debugging purposes*/
+    std::string find(std::string input) {
+        std::vector<Node>* curr_level = &trie_;
 
         std::vector<std::string> tokens;
         tokenizeSentence(input, tokens);
 
         for (auto&& token : tokens) {
             uint16_t id = dict_.at(token);
-            Node tmp;
-            tmp.id_ = id;
-            auto it = binarySearch(curr_level.begin(), curr_level.end(), tmp);
-            if (it == curr_level.end()) {
-                std::cout << "No continuations found" << std::endl;
-                return;
-            } else {
-                curr_level = it->next_level;
+            curr_level = this->find(id, curr_level);
+            if (curr_level == nullptr || curr_level->size() == 0) {
+                return std::string("No continuations found");
             }
         }
-
-        for (auto&& node : curr_level) {
-            std::cout << vocab_.at(node.id_) << " ";
+        std::string ret("");
+        for (auto&& node : *curr_level) {
+            if (ret != "") {
+                ret = ret + " ";
+            }
+            ret += vocab_.at(node.id_);
         }
-        std::cout << std::endl;
+        return ret;
     }
+
 };

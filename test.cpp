@@ -7,7 +7,10 @@ int main() {
 
     trieMeARiver trie(maps.first, maps.second);
     readFileByLine("Test/test_sents", trie);
-    trie.find("i am");
-    trie.find("this");
-    trie.find("we need to read in some");
+    std::cout << trie.find("i am") << std::endl;
+    std::cout << trie.find("this") << std::endl;
+    std::cout << trie.find("we need to read in some") << std::endl;
+    std::cout << trie.find("we need to read in some duplicates ,") << std::endl;
+    std::cout << trie.find("please don't") << std::endl;
+    std::cout << trie.find("you have to") << std::endl;
 }

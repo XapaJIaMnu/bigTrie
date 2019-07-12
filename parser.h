@@ -62,6 +62,7 @@ void readFileByLine(StringType filename, Operation& op) {
         while (getline(input, line)) {
             op(line);
         }
+        input.close();
     } catch (const std::ifstream::failure& e) {
         std::cerr << "Error opening file " << filename << " : " << e.what() << std::endl;
         std::exit(1);

@@ -1,8 +1,8 @@
-#include "parser.h"
+#include "trieMe.h"
 #define CATCH_CONFIG_MAIN 
 #include "3rd_party/catch.hpp" 
 
-TEST_CASE("Check vocab", "[factorial]" ) {
+TEST_CASE("Vocab", "[factorial]") {
     MakeVocab vocabFunctor;
     readFileByLine("Test/test_sents", vocabFunctor);
     std::unordered_map<std::string, uint16_t> inmap;
@@ -41,4 +41,49 @@ TEST_CASE("Check vocab", "[factorial]" ) {
         CHECK(outmap.at(27) == "wrong");
     }
 
+}
+
+TEST_CASE("Trie", "[trie]") {
+    MakeVocab vocab;
+    readFileByLine("Test/test_sents", vocab);
+    auto maps = vocab.getMaps();
+
+    trieMeARiver trie(maps.first, maps.second);
+    readFileByLine("Test/test_sents", trie);
+    
+    {
+        std::string res = trie.find("i am");
+        INFO("Expected \"very\", got " << res)
+        CHECK(res == "very");
+    }
+    {
+        std::string res = trie.find("this");
+        INFO("Expected \"code pleasure\", got " << res)
+        CHECK(res == "code pleasure");
+    }
+    {
+        std::string res = trie.find("we need to read in some");
+        INFO("Expected \"duplicates books\", got " << res)
+        CHECK(res == "duplicates books");
+    }
+    {
+        std::string res = trie.find("we need to read in some goose");
+        INFO("Expected \"No continuations found\", got " << res)
+        CHECK(res == "No continuations found");
+    }
+    {
+        std::string res = trie.find("you have to");
+        INFO("Expected \"No continuations found\", got " << res)
+        CHECK(res == "No continuations found");
+    }
+    {
+        std::string res = trie.find("we need to read in some duplicates ,");
+        INFO("Expected \"so\", got " << res)
+        CHECK(res == "so");
+    }
+    {
+        std::string res = trie.find("please don't");
+        INFO("Expected \"have beg hate fake\", got " << res)
+        CHECK(res == "have beg hate fake");
+    }
 }
