@@ -12,10 +12,14 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
+add_executable(example
+  example.cpp
+)
+
 #TESTS
 configure_file(${CMAKE_SOURCE_DIR}/Test/test_sents ${CMAKE_BINARY_DIR}/Test/test_sents COPYONLY)
 add_executable(tests
-  Test/vocab.cpp
+  Test/allTests.cpp
 )
 set_target_properties(tests
     PROPERTIES

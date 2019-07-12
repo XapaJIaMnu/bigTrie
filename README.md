@@ -1,2 +1,2 @@
-# bigTrie
-A big monolingual language model.
+# trieannosaurus
+A big monolingual prefix trie.

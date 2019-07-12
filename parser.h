@@ -6,6 +6,28 @@
 #include <unordered_map>
 #include <iostream>
 #include <filesystem>
+#include <cmath>
+#include <iomanip>
+#ifndef _WIN32
+#include <sys/ioctl.h> 
+#endif
+
+namespace trieannosaurus {
+
+//Progress bar for file reading
+//https://stackoverflow.com/questions/23400933/most-efficient-way-of-creating-a-progress-bar-while-reading-input-from-a-file
+inline void ProgresBar(size_t cur_pos, size_t len, int barWidth) {
+    float prog = cur_pos / float(len);
+    int curPers = std::ceil(prog * barWidth);
+    std::cout << std::fixed << std::setprecision(2)
+        << "\r   [" << std::string(curPers, '#')
+        << std::string(barWidth + 1 - curPers, ' ') << "] " << 100 * prog << "%";
+    if (prog == 1) {
+        std::cout << std::endl;
+    } else {
+        std::cout.flush();
+    }
+}
 
 /*Adapted from https://www.bfilipek.com/2018/07/string-view-perf-followup.html . We should probably go string_view way*/
 void tokenizeSentence(std::string& str, std::vector<std::string>& output, std::string delimeter = " ") {
@@ -49,7 +71,15 @@ public:
 };
 
 template <class StringType, class Operation>
-void readFileByLine(StringType filename, Operation& op) {
+void readFileByLine(StringType filename, Operation& op, const char * msg="") {
+    //Get Terminal length on Linux
+    int width_terminal = 80;
+    #ifndef _WIN32
+        struct winsize w;
+        ioctl(0, TIOCGWINSZ, &w);
+        width_terminal = std::ceil(w.ws_col*3/4);
+    #endif
+    size_t length;
     std::ifstream input;
     input.exceptions ( std::ifstream::badbit );
     try {
@@ -58,8 +88,14 @@ void readFileByLine(StringType filename, Operation& op) {
             std::cerr << "No such file or directory: " << filename << std::endl;
             std::exit(1);
         }
+        input.seekg (0, input.end);
+        length = input.tellg();
+        input.seekg (0, input.beg);
+
         std::string line;
+        std::cout << "\r   " << msg << std::endl;
         while (getline(input, line)) {
+            ProgresBar(input.tellg(), length, width_terminal);
             op(line);
         }
         input.close();
@@ -69,3 +105,5 @@ void readFileByLine(StringType filename, Operation& op) {
     }
 
 }
+
+} //Namespace

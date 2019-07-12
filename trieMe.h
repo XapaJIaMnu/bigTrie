@@ -1,6 +1,8 @@
 #include "parser.h"
 #include <algorithm>
 
+namespace trieannosaurus {
+
 //Adapted from https://stackoverflow.com/questions/446296/where-can-i-get-a-useful-c-binary-search-algorithm
 template<class Iter, class T>
 Iter binarySearch(Iter begin, Iter end, T& val) {
@@ -126,3 +128,4 @@ public:
     }
 
 };
+} //Namespace

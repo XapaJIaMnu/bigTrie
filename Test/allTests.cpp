@@ -2,6 +2,8 @@
 #define CATCH_CONFIG_MAIN 
 #include "3rd_party/catch.hpp" 
 
+namespace trieannosaurus {
+
 TEST_CASE("Vocab", "[factorial]") {
     MakeVocab vocabFunctor;
     readFileByLine("Test/test_sents", vocabFunctor);
@@ -87,3 +89,4 @@ TEST_CASE("Trie", "[trie]") {
         CHECK(res == "have beg hate fake");
     }
 }
+} //namespace
