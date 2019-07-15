@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(bigTrie)
+project(trieannosaurus)
 string(ASCII 27 Esc)
 set(Orange "${Esc}[33m")
 set(ColourReset "${Esc}[m")
