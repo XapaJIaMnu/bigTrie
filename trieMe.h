@@ -93,7 +93,7 @@ public:
         return trie_;
     }
 
-    std::vector<Node>* find(uint16_t id, std::vector<Node>* curr_level) {
+    static std::vector<Node>* find(uint16_t id, std::vector<Node>* curr_level) {
         Node tmp;
         tmp.id_ = id;
         auto it = binarySearch(curr_level->begin(), curr_level->end(), tmp);
