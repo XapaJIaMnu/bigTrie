@@ -89,8 +89,8 @@ public:
             }
         }
     }
-    std::vector<Node> getTrie() {
-        return trie_;
+    std::vector<Node>* getTrie() {
+        return &trie_;
     }
 
     static std::vector<Node>* find(uint16_t id, std::vector<Node>* curr_level) {
