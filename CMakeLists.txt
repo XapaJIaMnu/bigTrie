@@ -17,7 +17,7 @@ add_executable(example
 )
 
 #TESTS
-configure_file(${CMAKE_SOURCE_DIR}/Test/test_sents ${CMAKE_BINARY_DIR}/Test/test_sents COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/Test/test_sents ${PROJECT_BINARY_DIR}/Test/test_sents COPYONLY)
 add_executable(tests
   Test/allTests.cpp
 )
