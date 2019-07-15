@@ -55,8 +55,8 @@ public:
 class trieMeARiver {
 private:
     std::vector<Node> trie_;
-    std::unordered_map<uint16_t, std::string> vocab_;
     std::unordered_map<std::string, uint16_t> dict_;
+    std::unordered_map<uint16_t, std::string> vocab_;
 public:
     trieMeARiver(std::unordered_map<std::string, uint16_t> dict,
         std::unordered_map<uint16_t, std::string> vocab) : dict_(dict), vocab_(vocab) {

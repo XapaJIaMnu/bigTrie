@@ -30,7 +30,7 @@ inline void ProgresBar(size_t cur_pos, size_t len, int barWidth) {
 }
 
 /*Adapted from https://www.bfilipek.com/2018/07/string-view-perf-followup.html . We should probably go string_view way*/
-void tokenizeSentence(std::string& str, std::vector<std::string>& output, std::string delimeter = " ") {
+inline void tokenizeSentence(std::string& str, std::vector<std::string>& output, std::string delimeter = " ") {
     auto first = std::begin(str);
 
     while (first != str.end()) {
