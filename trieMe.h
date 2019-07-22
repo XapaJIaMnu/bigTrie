@@ -50,6 +50,11 @@ public:
             return false;
         }
     }
+
+    friend void swap(Node& lhs, Node& rhs) {
+        std::swap(lhs.id_, rhs.id_);
+        lhs.next_level.swap(rhs.next_level);
+    }
 };
 
 class trieMeARiver {
@@ -73,7 +78,7 @@ public:
         tokenizeSentence(line, tokens);
 
         std::vector<Node>* curr_level = &trie_;
-        
+
         for (auto&& item : tokens) {
             uint16_t id = dict_.at(item);
             Node tmp;
@@ -81,9 +86,13 @@ public:
             auto it = binarySearch(curr_level->begin(), curr_level->end(), tmp);
             if (it == curr_level->end()) {
                 curr_level->emplace_back(tmp);
-                curr_level = &curr_level->back().next_level;
                 std::sort(curr_level->begin(), curr_level->end());
-                
+                //std::sort changes the address of the vector in the node so we can't save a pointer to it and save oursaves a search
+                //We can definitely do it better.
+                //std::vector<Node>* nxt_lvl = &curr_level->back().next_level;
+                //std::sort(curr_level->begin(), curr_level->end());
+                //curr_level = nxt_lvl; produces wrong results
+                curr_level = &(binarySearch(curr_level->begin(), curr_level->end(), tmp)->next_level);
             } else {
                 curr_level = &it->next_level;
             }
