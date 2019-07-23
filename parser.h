@@ -5,6 +5,11 @@
 #include <fstream>
 #include <unordered_map>
 #include <iostream>
+#if __has_include(<filesystem>)
+# include <filesystem>
+#else
+# include <experimental/filesystem>
+#endif
 #include <filesystem>
 #include <cmath>
 #include <iomanip>
