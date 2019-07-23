@@ -21,34 +21,18 @@ public:
     std::vector<Node> next_level;
 
     bool operator<(const Node& other) {
-        if(id_ < other.id_) {
-           return true;
-        } else {
-            return false;
-        }
+        return id_ < other.id_;
     }
     bool operator<(const uint16_t& other) {
-        if(id_ < other) {
-           return true;
-        } else {
-            return false;
-        }
+        return id_ < other;
     }
 
     bool operator==(const Node& other) {
-        if(id_ == other.id_) {
-           return true;
-        } else {
-            return false;
-        }
+        return id_ == other.id_;
     }
 
     bool operator==(const uint16_t& other) {
-        if(id_ == other) {
-           return true;
-        } else {
-            return false;
-        }
+        return id_ == other;
     }
 
     friend void swap(Node& lhs, Node& rhs) {
