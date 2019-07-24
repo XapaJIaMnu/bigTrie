@@ -19,13 +19,13 @@ namespace trieannosaurus {
 inline void ProgresBar(size_t cur_pos, size_t len, int barWidth) {
     float prog = cur_pos / float(len);
     int curPers = std::ceil(prog * barWidth);
-    std::cout << std::fixed << std::setprecision(2)
+    std::cerr << std::fixed << std::setprecision(2)
         << "\r   [" << std::string(curPers, '#')
         << std::string(barWidth + 1 - curPers, ' ') << "] " << 100 * prog << "%";
     if (prog == 1) {
-        std::cout << std::endl;
+        std::cerr << std::endl;
     } else {
-        std::cout.flush();
+        std::cerr.flush();
     }
 }
 
@@ -93,7 +93,7 @@ void readFileByLine(StringType filename, Operation& op, const char * msg="") {
         input.seekg (0, input.beg);
 
         std::string line;
-        std::cout << "\r   " << msg << std::endl;
+        std::cerr << "\r   " << msg << std::endl;
         while (getline(input, line)) {
             ProgresBar(input.tellg(), length, width_terminal);
             op(line);
