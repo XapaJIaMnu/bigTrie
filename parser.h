@@ -22,12 +22,12 @@ namespace trieannosaurus {
 //Progress bar for file reading
 //https://stackoverflow.com/questions/23400933/most-efficient-way-of-creating-a-progress-bar-while-reading-input-from-a-file
 inline void ProgresBar(size_t cur_pos, size_t len, int barWidth) {
-    float prog = cur_pos / float(len);
+    float prog = std::min(cur_pos / float(len), 1.0f);
     int curPers = std::ceil(prog * barWidth);
     std::cerr << std::fixed << std::setprecision(2)
         << "\r   [" << std::string(curPers, '#')
         << std::string(barWidth + 1 - curPers, ' ') << "] " << 100 * prog << "%";
-    if (prog == 1) {
+    if ((int)prog == 1) {
         std::cerr << std::endl;
     } else {
         std::cerr.flush();
