@@ -23,24 +23,29 @@ TEST_CASE("Vocab", "[factorial]") {
         CHECK(outmap.at(1) == "am");
     }
     {
-        INFO("read is indexed as " << inmap.at("read") << " expected 7.")
-        CHECK(inmap.at("read") == 7);
-        CHECK(outmap.at(7) == "read");
+        INFO("read is indexed as " << inmap.at("read") << " expected 8.")
+        CHECK(inmap.at("read") == 8);
+        CHECK(outmap.at(8) == "read");
     }
     {
-        INFO(". is indexed as " << inmap.at(".") << " expected 10.")
-        CHECK(inmap.at(".") == 10);
-        CHECK(outmap.at(10) == ".");
+        INFO(". is indexed as " << inmap.at(".") << " expected 11.")
+        CHECK(inmap.at(".") == 11);
+        CHECK(outmap.at(11) == ".");
     }
     {
-        INFO("working is indexed as " << inmap.at("working") << " expected 28.")
-        CHECK(inmap.at("working") == 24);
-        CHECK(outmap.at(24) == "working");
+        INFO("working is indexed as " << inmap.at("working") << " expected 25.")
+        CHECK(inmap.at("working") == 25);
+        CHECK(outmap.at(25) == "working");
     }
     {
-        INFO("wrong is indexed as " << inmap.at("wrong") << " expected 27.")
-        CHECK(inmap.at("wrong") == 27);
-        CHECK(outmap.at(27) == "wrong");
+        INFO("wrong is indexed as " << inmap.at("wrong") << " expected 28.")
+        CHECK(inmap.at("wrong") == 28);
+        CHECK(outmap.at(28) == "wrong");
+    }
+    {
+        INFO("wrong is indexed as " << inmap.at("</s>") << " expected 4.")
+        CHECK(inmap.at("</s>") == 4);
+        CHECK(outmap.at(4) == "</s>");
     }
 
 }
@@ -74,9 +79,14 @@ TEST_CASE("Trie", "[trie]") {
         CHECK(res == "No continuations found");
     }
     {
-        std::string res = trie.find("you have to");
+        std::string res = trie.find("you have to </s>");
         INFO("Expected \"No continuations found\", got " << res)
         CHECK(res == "No continuations found");
+    }
+    {
+        std::string res = trie.find("you have to");
+        INFO("Expected \"</s>\", got " << res)
+        CHECK(res == "</s>");
     }
     {
         std::string res = trie.find("we need to read in some duplicates ,");

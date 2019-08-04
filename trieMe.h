@@ -59,7 +59,7 @@ public:
     }
     void operator()(std::string& line) {
         std::vector<std::string> tokens;
-        tokenizeSentence(line, tokens);
+        tokenizeSentence(line, tokens, true);
 
         std::vector<Node>* curr_level = &trie_;
 
