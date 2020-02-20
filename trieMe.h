@@ -50,12 +50,13 @@ public:
     trieMeARiver(std::unordered_map<std::string, uint16_t> dict,
         std::unordered_map<uint16_t, std::string> vocab) : dict_(dict), vocab_(vocab) {
         //This should be done in order in order to avoid the sort at the end
+        /*
         for (auto&& item : vocab_) {
             Node node;
             node.id_ = item.first;
             trie_.push_back(node);
         }
-        std::sort(trie_.begin(), trie_.end());
+        std::sort(trie_.begin(), trie_.end());*/
     }
     void operator()(std::string& line) {
         std::vector<std::string> tokens;
